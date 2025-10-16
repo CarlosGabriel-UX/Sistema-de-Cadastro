@@ -1,0 +1,603 @@
+/* =============================================================================
+   COMPONENTES DE FORMULÁRIO - SISTEMA MODULAR
+   ============================================================================= */
+
+/* === BASE DOS FORMULÁRIOS === */
+.form-container {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xl);
+  margin: var(--spacing-lg) 0;
+  box-shadow: var(--box-shadow-large);
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.form-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, var(--primary-color) 0%, transparent 70%);
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.form-container > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* === SEÇÕES DO FORMULÁRIO === */
+.form-section {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg) 0;
+  margin: var(--spacing-lg) 0;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: var(--box-shadow-medium);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+  position: relative;
+  will-change: transform;
+}
+
+.form-section:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--box-shadow-large);
+  transform: translateY(-2px);
+}
+
+.form-section:last-child {
+  margin-bottom: 0;
+}
+
+.section-header {
+  margin-bottom: var(--spacing-lg);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  line-height: var(--line-height-tight);
+}
+
+.section-header i {
+  color: var(--primary-color);
+  font-size: var(--font-size-xl);
+}
+
+/* === GRID DO FORMULÁRIO === */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+.form-grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.form-grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.form-grid--4-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* === GRUPOS DE INPUT === */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  position: relative;
+  transition: all var(--transition-speed-fast) var(--transition-easing);
+}
+
+.input-group:hover {
+  transform: translateY(-1px);
+}
+
+.input-group label {
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-color);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  line-height: var(--line-height-tight);
+  position: relative;
+}
+
+.input-group label::before {
+  content: '';
+  width: 3px;
+  height: 100%;
+  background: var(--primary-gradient);
+  border-radius: var(--border-radius-sm);
+  position: absolute;
+  left: -var(--spacing-sm);
+}
+
+.input-group label.required::after {
+  content: '*';
+  color: var(--danger-color);
+  margin-left: var(--spacing-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+/* === CAMPOS DE INPUT === */
+.form-input,
+.input-group input,
+.input-group select,
+.input-group textarea {
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  color: var(--text-color);
+  background-color: var(--card-bg);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 44px;
+  line-height: var(--line-height-normal);
+  font-family: var(--font-family-primary);
+}
+
+.form-input:focus,
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.form-input::placeholder,
+.input-group input::placeholder,
+.input-group textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+
+.input-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* === ESTADOS DE VALIDAÇÃO === */
+.input-group .form-input.valid,
+.input-group input.valid,
+.input-group select.valid,
+.input-group textarea.valid {
+  border-color: var(--success-color);
+  box-shadow: 0 0 0 3px var(--success-light);
+}
+
+.input-group .form-input.error,
+.input-group input.error,
+.input-group select.error,
+.input-group textarea.error {
+  border-color: var(--danger-color);
+  box-shadow: 0 0 0 3px var(--danger-light);
+  animation: shake 0.6s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-2px); }
+  20%, 40%, 60%, 80% { transform: translateX(2px); }
+}
+
+/* === MENSAGENS DE FEEDBACK === */
+.field-message {
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  animation: slideDown 0.3s ease;
+  line-height: var(--line-height-tight);
+}
+
+.field-message--error {
+  color: var(--danger-color);
+}
+
+.field-message--success {
+  color: var(--success-color);
+}
+
+.field-message--warning {
+  color: var(--warning-color);
+}
+
+.field-message--info {
+  color: var(--info-color);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === FIELDSETS === */
+.form-fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+  background: var(--light-color);
+  box-shadow: var(--box-shadow-light);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+  position: relative;
+  overflow: hidden;
+}
+
+.form-fieldset:hover {
+  box-shadow: var(--box-shadow-medium);
+}
+
+.form-fieldset legend {
+  background: var(--primary-gradient);
+  color: white;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--box-shadow-medium);
+  margin-left: var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === GRUPOS DE RADIO === */
+.radio-fieldset {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-lg) 0;
+  background: var(--card-bg);
+  box-shadow: var(--box-shadow-light);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+}
+
+.radio-fieldset:hover {
+  box-shadow: var(--box-shadow-medium);
+}
+
+.radio-fieldset legend {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-sm);
+  color: var(--text-color);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--light-color);
+  border-radius: var(--border-radius-sm);
+}
+
+.radio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+}
+
+.radio-group:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--box-shadow-light);
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  color: var(--text-color);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: background-color var(--transition-speed-fast) var(--transition-easing);
+  font-weight: var(--font-weight-normal);
+}
+
+.radio-group label:hover {
+  background-color: var(--light-color);
+}
+
+.radio-group input[type="radio"] {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  transition: all var(--transition-speed-fast) var(--transition-easing);
+  margin: 0;
+}
+
+.radio-group input[type="radio"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform var(--transition-speed-fast) var(--transition-easing);
+  background-color: var(--primary-color);
+}
+
+.radio-group input[type="radio"]:checked::before {
+  transform: scale(1);
+}
+
+.radio-group input[type="radio"]:focus {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* === AÇÕES DO FORMULÁRIO === */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) 0;
+  border-top: 2px solid var(--border-color);
+  margin-top: var(--spacing-lg);
+  background: rgba(255, 255, 255, 0.95);
+  position: sticky;
+  bottom: 0;
+  backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+.form-button {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed-normal) var(--transition-easing);
+  min-width: 120px;
+  justify-content: center;
+  min-height: 44px;
+  line-height: var(--line-height-tight);
+  cursor: pointer;
+  border: 2px solid transparent;
+  text-decoration: none;
+  font-family: var(--font-family-primary);
+}
+
+.form-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--box-shadow-medium);
+}
+
+.form-button:active {
+  transform: translateY(0);
+}
+
+.form-button--primary {
+  background: var(--primary-gradient);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.form-button--primary:hover {
+  box-shadow: var(--box-shadow-hover);
+}
+
+.form-button--secondary {
+  background: var(--card-bg);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.form-button--secondary:hover {
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.form-button--danger {
+  background: var(--danger-color);
+  color: white;
+  border-color: var(--danger-color);
+}
+
+.form-button--success {
+  background: var(--success-color);
+  color: white;
+  border-color: var(--success-color);
+}
+
+/* === UTILITÁRIOS === */
+.span-full {
+  grid-column: 1 / -1;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-3 {
+  grid-column: span 3;
+}
+
+.span-4 {
+  grid-column: span 4;
+}
+
+/* === UTILITÁRIOS DE VISIBILIDADE === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+.char-counter {
+  margin-top: var(--spacing-sm);
+  text-align: right;
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  line-height: var(--line-height-tight);
+}
+
+.form-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.form-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--primary-gradient);
+  border-radius: var(--border-radius-sm);
+  transition: width var(--transition-speed-normal) var(--transition-easing);
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 1024px) {
+  .form-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .form-grid--2-cols,
+  .form-grid--3-cols,
+  .form-grid--4-cols {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .radio-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .form-container {
+    padding: var(--spacing-lg);
+    margin: var(--spacing-md) 0;
+    border-radius: var(--border-radius);
+  }
+  
+  .form-grid,
+  .form-grid--2-cols,
+  .form-grid--3-cols,
+  .form-grid--4-cols {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+  
+  .radio-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .form-button {
+    width: 100%;
+  }
+  
+  .span-2,
+  .span-3,
+  .span-4 {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .form-container {
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+  }
+  
+  .form-section {
+    padding: var(--spacing-md) 0;
+  }
+  
+  .section-header {
+    font-size: var(--font-size-base);
+  }
+  
+  .form-fieldset,
+  .radio-fieldset {
+    padding: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+  }
+  
+  .form-fieldset legend,
+  .radio-fieldset legend {
+    font-size: var(--font-size-base);
+    padding: var(--spacing-xs) var(--spacing-md);
+  }
+  
+  .form-input,
+  .input-group input,
+  .input-group select,
+  .input-group textarea {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+    min-height: 40px;
+  }
+  
+  .input-group textarea {
+    min-height: 80px;
+  }
+}

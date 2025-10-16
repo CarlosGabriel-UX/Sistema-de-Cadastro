@@ -1,0 +1,334 @@
+/* === ESTILOS PARA A SEÇÃO SOBRE A PR7 === */
+
+.company-info {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Cabeçalho da empresa */
+.company-header {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-radius: var(--border-radius-lg);
+  color: white;
+  box-shadow: var(--box-shadow);
+}
+
+.company-logo {
+  flex-shrink: 0;
+}
+
+.company-details h3 {
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.5rem 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.company-tagline {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Descrição da empresa */
+.company-description {
+  line-height: 1.7;
+}
+
+.company-description h4 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  margin: 2.5rem 0 1rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--primary-color);
+  position: relative;
+}
+
+.company-description h4::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: var(--secondary-color);
+}
+
+.company-description p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+  color: var(--text-color);
+}
+
+/* Lista de valores */
+.values-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.values-list li {
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background: var(--card-bg);
+  border-left: 4px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow-light);
+  transition: all var(--transition-speed);
+}
+
+.values-list li:hover {
+  transform: translateX(5px);
+  box-shadow: var(--box-shadow);
+}
+
+.values-list li strong {
+  color: var(--primary-color);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* Grid de produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.product-card {
+  background: var(--card-bg);
+  padding: 2rem;
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: var(--box-shadow-light);
+  transition: all var(--transition-speed);
+  border: 1px solid var(--border-color);
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+  border-color: var(--primary-color);
+}
+
+.product-card i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.product-card h5 {
+  font-size: 1.3rem;
+  font-weight: var(--font-weight-semibold);
+  margin: 0 0 1rem 0;
+  color: var(--text-color);
+}
+
+.product-card p {
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Informações de contato */
+.contact-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 2rem;
+  background: var(--light-color);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--border-color);
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-speed);
+}
+
+.contact-item:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.02);
+}
+
+.contact-item i {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.contact-item:hover i {
+  color: white;
+}
+
+.contact-item span {
+  font-weight: var(--font-weight-medium);
+}
+
+/* Estatísticas da empresa */
+.company-stats {
+  margin-top: 3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow);
+  transition: all var(--transition-speed);
+}
+
+.stat-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.stat-number {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: var(--font-weight-bold);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.stat-label {
+  display: block;
+  font-size: 1rem;
+  opacity: 0.9;
+  font-weight: var(--font-weight-medium);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .company-info {
+    padding: 1rem;
+  }
+  
+  .company-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .company-details h3 {
+    font-size: 2rem;
+  }
+  
+  .company-tagline {
+    font-size: 1rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .contact-info {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .company-details h3 {
+    font-size: 1.5rem;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .product-card {
+    padding: 1.5rem;
+  }
+  
+  .stat-item {
+    padding: 1.5rem;
+  }
+}
+
+/* Animações */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.company-info > * {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.company-info > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.company-info > *:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+/* Tema escuro */
+@media (prefers-color-scheme: dark) {
+  .company-header {
+    background: linear-gradient(135deg, #2c5aa0, #1e3a8a);
+  }
+  
+  .values-list li {
+    background: var(--card-bg);
+    border-left-color: var(--primary-color);
+  }
+  
+  .contact-info {
+    background: var(--card-bg);
+  }
+}
+
+[data-theme="dark"] .company-header {
+  background: linear-gradient(135deg, #2c5aa0, #1e3a8a);
+}
+
+[data-theme="dark"] .values-list li {
+  background: var(--card-bg);
+  border-left-color: var(--primary-color);
+}
+
+[data-theme="dark"] .contact-info {
+  background: var(--card-bg);
+}
