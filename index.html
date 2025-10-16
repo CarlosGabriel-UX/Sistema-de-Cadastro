@@ -250,13 +250,10 @@
         /* Override de segurança: garantir que a sidebar não ocupe 100% da largura */
         /* Alguns estilos globais podem definir .sidebar com width: 100vw; aqui mantemos o padrão do SB Admin */
         #accordionSidebar.sidebar {
-            width: 14rem !important;
-            min-width: 14rem !important;
+            width: var(--sidebar-width-expanded) !important;
+            min-width: var(--sidebar-width-expanded) !important;
         }
-        /* Assegurar que o content-wrapper não seja deslocado por estilos externos */
-        #content-wrapper {
-            margin-left: 0 !important;
-        }
+        /* O posicionamento será calculado dinamicamente via script para evitar conflitos */
         
         .card-body {
             padding: 1.5rem;
@@ -453,7 +450,7 @@
 
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="vendor/fontawesome-free/svgs/solid/rocket.svg" alt="Sistema PR7" style="width: 60px; height: 60px; filter: invert(1);">
+                <img class="sidebar-card-illustration mb-2" src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/svgs/solid/rocket.svg" alt="Sistema PR7" style="width: 60px; height: 60px; filter: invert(1);">
                 <p class="text-center mb-2"><strong>Sistema PR7</strong> oferece gerenciamento completo de ocorrências e muito mais!</p>
                 <a class="btn btn-success btn-sm" href="#" data-target="about-pr7-section">Saiba Mais!</a>
             </div>
@@ -2832,15 +2829,7 @@
             </div>
             <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Sistema de Cadastro 2025</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
+            
 
         </div>
         <!-- End of Content Wrapper -->
@@ -2848,10 +2837,7 @@
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    
 
     <!-- Modais existentes serão mantidos aqui -->
     <!-- Modal de Cadastro -->
@@ -3238,8 +3224,41 @@
             <script src="forms/cepService.js"></script>
             <script src="popups.js"></script>
             <script type="module">
-              import { getAccessibilityManager } from 'js/core/accessibility.js';
-              window.accessibilityManager = getAccessibilityManager();
+            (async () => {
+              const isHttpProtocol = location.protocol === 'http:' || location.protocol === 'https:';
+              if (isHttpProtocol) {
+                try {
+                  const { getAccessibilityManager } = await import('./js/core/accessibility.js');
+                  window.accessibilityManager = getAccessibilityManager();
+                } catch (err) {
+                  console.warn('Falha ao carregar módulo de acessibilidade:', err);
+                }
+              } else {
+                console.warn('Acessibilidade ESM desativada no protocolo file://. Use http:// para habilitar.');
+                // Fallback mínimo para evitar erros nas chamadas existentes
+                window.accessibilityManager = window.accessibilityManager || {
+                  openModal(modal, focusSelectors) {
+                    if (!modal) return;
+                    modal.classList.add('show');
+                    modal.setAttribute('aria-hidden', 'false');
+                    if (Array.isArray(focusSelectors)) {
+                      for (const sel of focusSelectors) {
+                        const el = document.querySelector(sel);
+                        if (el) { el.focus(); break; }
+                      }
+                    } else {
+                      const focusable = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                      if (focusable) focusable.focus();
+                    }
+                  },
+                  closeModal(modal) {
+                    if (!modal) return;
+                    modal.classList.remove('show');
+                    modal.setAttribute('aria-hidden', 'true');
+                  }
+                };
+              }
+            })();
             </script>
             <script src="index.js"></script>
             <script>
@@ -6126,6 +6145,8 @@
             }
         }
     </script>
+
+    <!-- Layout agora é controlado por CSS Grid; script de largura removido -->
     <!-- Modal de Ocorrência -->
     <div id="modal-ocorrencia" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="modal-ocorrencia-title" aria-describedby="modal-ocorrencia-desc" aria-hidden="true">
       <div id="modal-content-ocorrencia" class="modal-content">

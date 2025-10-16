@@ -146,11 +146,11 @@ a:hover {
     /* Transições suaves */
     --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1)
+    --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     
     /* Variáveis para compatibilidade com layout responsivo */
---sidebar-width-collapsed: 0px;
---sidebar-width-expanded: 280px;
+--sidebar-width-collapsed: 6.5rem;
+ --sidebar-width-expanded: 14rem;
     
     /* Variáveis de acessibilidade específicas (mantidas para compatibilidade) */
     --focus-color: #4299e1;
@@ -180,8 +180,8 @@ a:hover {
     --border-color: #0f172a;
 
     /* Variáveis para compatibilidade com layout responsivo */
---sidebar-width-collapsed: 0px;
---sidebar-width-expanded: 280px;
+--sidebar-width-collapsed: 6.5rem;
+ --sidebar-width-expanded: 14rem;
 }
 
 /* Importação de fontes modernas */
@@ -209,7 +209,7 @@ body {
         top: 0 !important;
         left: 0 !important;
         transform: translateX(-100%) !important;
-        width: 280px !important;
+        width: var(--sidebar-width-expanded) !important;
         height: 100vh !important;
         z-index: 1045;
         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
@@ -283,19 +283,26 @@ body {
 
 /* Layout base para garantir largura e altura do conteúdo */
 #wrapper {
-    display: flex !important;
+    display: grid !important;
+    grid-template-columns: var(--sidebar-width-expanded) 1fr !important;
     width: 100% !important;
     min-height: 100vh !important;
 }
 
+body.sidebar-toggled #wrapper {
+    grid-template-columns: var(--sidebar-width-collapsed) 1fr !important;
+}
+
 #accordionSidebar {
     flex: 0 0 var(--sidebar-width-expanded);
+    width: var(--sidebar-width-expanded);
 }
 
 #content-wrapper {
     display: flex !important;
     flex-direction: column !important;
-    flex: 1 1 auto !important;
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
     width: auto !important;
     min-height: 100vh !important;
 }
@@ -306,6 +313,33 @@ body {
     width: 100% !important;
     min-width: 0 !important;
     min-height: 0; /* reduzir altura mínima para evitar espaços em branco quando há pouco conteúdo */
+}
+
+/* Garantir que o conteúdo ocupe espaço ao lado da sidebar (desktop) */
+#content-wrapper {
+    margin-left: 0 !important; /* Em layout flex, a sidebar já ocupa seu espaço */
+}
+
+/* Sidebar colapsada: manter sem margem para evitar deslocamentos duplos */
+body.sidebar-toggled #content-wrapper {
+    margin-left: 0 !important;
+}
+
+@media (max-width: 768px) {
+    /* Em mobile, sidebar vira overlay e conteúdo ocupa 100% */
+    #wrapper {
+        grid-template-columns: 0 1fr !important;
+    }
+    body.sidebar-toggled #wrapper {
+        grid-template-columns: 0 1fr !important;
+    }
+    #content-wrapper {
+        margin-left: 0 !important; /* Em mobile a sidebar vira overlay */
+        width: 100% !important; /* Em mobile, conteúdo deve ocupar 100% */
+    }
+    body.sidebar-toggled #content-wrapper {
+        margin-left: 0 !important;
+    }
 }
 
 /* Garantir que o container interno ocupe largura e altura adequadas */
@@ -340,6 +374,18 @@ body {
     pointer-events: none !important;
 }
 
+/* Ocultar elementos removidos da UI por consistência */
+.scroll-to-top {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+footer.sticky-footer {
+    display: none !important;
+}
+
 /* Notificações: estado de lido */
 .notification-item.read {
     opacity: 0.6;
@@ -350,11 +396,20 @@ body {
 .sticky-footer {
     flex-shrink: 0;
     width: 100%;
+    padding: var(--spacing-xs) 0;
 }
 
 .sticky-footer .my-auto {
     margin-top: 0 !important;
     margin-bottom: 0 !important;
+}
+
+.sticky-footer .container {
+    padding: 0 var(--spacing-lg);
+}
+
+.sticky-footer .copyright {
+    margin: 0 !important;
 }
 
 /* Melhorias de rolagem e responsividade de tabelas dentro das seções */
@@ -699,8 +754,8 @@ button:active:not(:disabled),
     }
     
     .sidebar {
-        --sidebar-width-collapsed: 70px;
-        --sidebar-width-expanded: 250px;
+        --sidebar-width-collapsed: 6.5rem;
+        --sidebar-width-expanded: 14rem;
     }
     
     .sidebar .logo {
@@ -731,7 +786,7 @@ button:active:not(:disabled),
         top: 0;
         left: 0;
         height: 100vh;
-        width: 280px;
+        width: var(--sidebar-width-expanded);
         /* Oculta sidebar fora da tela em mobile por padrão */
         transform: translateX(-100%);
         transition: transform var(--transition-speed-slow) ease;
@@ -865,7 +920,7 @@ button:active:not(:disabled),
     #sidebar.offcanvas {
         position: fixed !important;
         transform: translateX(-100%) !important;
-        width: 280px !important;
+        width: var(--sidebar-width-expanded) !important;
         height: 100vh !important;
         z-index: 1045;
         transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
@@ -896,7 +951,7 @@ button:active:not(:disabled),
     
     /* Ajusta o tamanho da sidebar para mobile */
     .sidebar {
-        width: 280px;
+        width: var(--sidebar-width-expanded);
         padding: 1.5rem 1rem;
         background: var(--sidebar-bg);
     }
@@ -5365,7 +5420,7 @@ fieldset legend::before {
     animation: badgePulse 0.6s ease-in-out;
     cursor: default;
 }
-animation: shake 0.5s ease-in-out;
+
 
 .input-field.warning {
     border-color: #f59e0b;
@@ -5404,9 +5459,6 @@ animation: shake 0.5s ease-in-out;
 }
 
 /* Melhorias de performance e otimização */
-* {
-    will-change: auto;
-}
 
 .sidebar,
 .modal-overlay,
@@ -5442,7 +5494,7 @@ animation: shake 0.5s ease-in-out;
 }
 
 /* Melhorias de contraste para acessibilidade */
-@media (prefers-contrast: high) {
+@media (prefers-contrast: more) {
     :root {
         --primary-color: #0056b3;
         --text-color: #000000;

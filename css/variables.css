@@ -93,6 +93,10 @@
   /* === ALTURAS DE MAPA === */
   --map-height-desktop: 55vh; /* altura responsiva baseada no viewport */
   --map-height-mobile: 320px; /* fallback confortável para telas pequenas */
+
+  /* === LARGURAS DA SIDEBAR === */
+  --sidebar-width-expanded: 14rem; /* largura padrão expandida da sidebar */
+  --sidebar-width-collapsed: 6.5rem; /* largura quando colapsada */
 }
 
 /* === TEMA ESCURO === */

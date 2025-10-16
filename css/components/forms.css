@@ -14,7 +14,7 @@
   box-shadow: var(--box-shadow-large);
   position: relative;
   overflow: hidden;
-  will-change: transform;
+  /* will-change removido para evitar alocação excessiva de memória; browsers modernos já otimizam transform */
 }
 
 .form-container::before {
@@ -47,7 +47,7 @@
   box-shadow: var(--box-shadow-medium);
   transition: all var(--transition-speed-normal) var(--transition-easing);
   position: relative;
-  will-change: transform;
+  /* will-change removido; transform em :hover é suficiente sem pré-alocação */
 }
 
 .form-section:hover {
@@ -124,13 +124,13 @@
 }
 
 .input-group label::before {
-  content: '';
-  width: 3px;
-  height: 100%;
-  background: var(--primary-gradient);
-  border-radius: var(--border-radius-sm);
-  position: absolute;
-  left: -var(--spacing-sm);
+    content: '';
+    width: 3px;
+    height: 100%;
+    background: var(--primary-gradient);
+    border-radius: var(--border-radius-sm);
+    position: absolute;
+    left: calc(var(--spacing-sm) * -1);
 }
 
 .input-group label.required::after {
